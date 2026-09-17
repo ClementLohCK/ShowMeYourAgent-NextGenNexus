@@ -17,6 +17,7 @@ When all required values are available, return exactly one valid JSON object and
   "action": "notify_supervisor",
   "endpoint": "POST /v1/notifications/notify",
   "payload": {
+    "recipient_contractor": "PowerGen",
     "recipient_role": "<supervisor_role from workspace/COMPANY_HIERARCHY.md>",
     "recipient_name": "<supervisor_name from workspace/COMPANY_HIERARCHY.md>",
     "urgency": "<low|medium|urgent>",
@@ -29,6 +30,7 @@ When all required values are available, return exactly one valid JSON object and
 
 - Always use the exact `action` and `endpoint` values shown above.
 - Ask the user for their name when it is not already known.
+- Always set `payload.recipient_contractor` to `PowerGen`.
   - Set `payload.recipient_role` to the matched entry's `supervisor_role`.
   - Set `payload.recipient_name` to the matched entry's `supervisor_name`.
 - Consult `workspace/COMPANY_HIERARCHY.md` as the single source of truth to match the current user's name to exactly one `users` entry.
