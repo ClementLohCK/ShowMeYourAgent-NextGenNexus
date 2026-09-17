@@ -19,8 +19,8 @@ When all required values are available, return exactly one valid JSON object and
   "payload": {
     "context": {
       "critical_condition": "<low|medium|critical>",
-      "equipment": "<equipment identifier>",
-      "location": "<site location>"
+      "location": "<site location>",
+      "equipment": "<equipment description or identifier>"
     },
     "stakeholders": {
       "reported_by": "<current user's name>",
@@ -40,8 +40,8 @@ When all required values are available, return exactly one valid JSON object and
 
 - Always use the exact `action` and `endpoint` values shown above.
 - Put the reported severity or condition level in `payload.context.critical_condition`. Use only `low`, `medium`, or `critical`.
-- Put the reported equipment identifier in `payload.context.equipment`. Ask for it if it is missing or ambiguous.
 - Put the reported site, zone, or sector in `payload.context.location`.
+- Put the reported equipment identifier in `payload.context.equipment`.
 - Put the current user's name in `payload.stakeholders.reported_by`. Ask for the user's name if the current user has no unique match in `workspace/COMPANY_HIERARCHY.md`.
 - Put the report date and time in `payload.stakeholders.reported_date_time` using ISO 8601 format. Use the date and time of the message first sent by user.
 - Always set `payload.contact_details.contractor` to `PowerGen`.
