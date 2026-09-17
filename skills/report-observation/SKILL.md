@@ -43,7 +43,7 @@ When all required values are available, return exactly one valid JSON object and
 - Put the reported site, zone, or sector in `payload.context.location`.
 - Put the reported equipment identifier in `payload.context.equipment`.
 - Put the current user's name in `payload.stakeholders.reported_by`. Ask for the user's name if the current user has no unique match in `workspace/COMPANY_HIERARCHY.md`.
-- Put the report date and time in `payload.stakeholders.reported_date_time` using ISO 8601 format. Use the date and time of the message first sent by user.
+- Put the report date and time in `payload.stakeholders.reported_date_time` using ISO 8601 format and Singapore time (`Asia/Singapore`, GMT+8 / UTC+08:00). Use the date and time of the message first sent by user and include the `+08:00` offset in the value.
 - Always set `payload.contact_details.contractor` to `PowerGen`.
 - Consult `workspace/COMPANY_HIERARCHY.md` as the single source of truth to match the current user's name to exactly one `users` entry. Ask for the user's name if the current user has no unique match in `workspace/COMPANY_HIERARCHY.md`.
 - Set `payload.contact_details.supervisor_role` and `payload.contact_details.supervisor_name` from the matched entry's `supervisor_role` and `supervisor_name`.
