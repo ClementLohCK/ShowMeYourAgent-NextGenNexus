@@ -10,7 +10,7 @@ Use this skill whenever the user reports or observes equipment damage, failure, 
 
 ## Output
 
-When all required values are available, return exactly one valid JSON object and no surrounding Markdown, explanation, or code fence:
+When all required values are available, return exactly one valid JSON object and no surrounding Markdown, explanation, words or code fence:
 
 ```json
 {
@@ -68,6 +68,7 @@ When all required values are available, return exactly one valid JSON object and
 - If a required value is missing or ambiguous, ask follow-up question(s) instead of inventing it.
 - If more than one value is missing or ambiguous, ask exactly one concise follow-up question per turn, then wait for the user's answer before asking the next question.
 - If the user answers a question with information for multiple fields, record every unambiguous value and ask only for the next missing or ambiguous field.
+- If there is a question to be asked, print "--- <QUESTION_FOR_USER> ---" below the output and replace <QUESTION_FOR_USER> with exactly one question only per turn.
 
 ### 6. Validation
 - Before producing the JSON, check every required payload field for missing, unclear, or conflicting values.

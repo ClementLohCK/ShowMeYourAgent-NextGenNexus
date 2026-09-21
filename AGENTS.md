@@ -121,7 +121,7 @@ Add conventions, style, and rules as you learn what works for this workspace.
 ## Behavior Test
 
 Rules For every incoming message sent by User:
-- When users send a message, analyze if it requires one or multiple actions from SKILLS.md.
+- When users send a message, analyse if it requires which one action from SKILLS.md.
 <!-- TODO=:
 - If multiple actions from SKILLS.md are implied from a message, you must output all relevant action blocks. -->
 
