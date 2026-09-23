@@ -120,8 +120,18 @@ Add conventions, style, and rules as you learn what works for this workspace.
 
 ## Behavior Test
 
-Rules For every incoming message sent by User:
-- When users send a message, analyse if it requires which one action from SKILLS.md.
+For every incoming message sent by a user:
+1. Call `get_role(telegram_handle, telegram_message)` from `auth.py` then return exactly one valid JSON object following the format below and no surrounding Markdown, explanation, words or code fence:
+```json
+{
+    "telegram_handle": <telegram_handle>,
+    "telegram_message": <telegram_message>,
+    "role": <role>
+}
+```
+
+<!-- before processing the message. Use the returned role for authorization decisions. If it returns `None`, treat the Telegram handle as unmatched and do not infer a role. -->
+<!-- - When users send a message, analyse if it requires which one action from SKILLS.md. -->
 <!-- TODO=:
 - If multiple actions from SKILLS.md are implied from a message, you must output all relevant action blocks. -->
 

@@ -19,10 +19,12 @@ Add one mapping for each user who can use the notification skill:
 users:
   - role: "Technician"
     name: "Prudence Nyambura"
+    telegram_handle: "@ClementLohCK"
     supervisor_role: "Engineer"
     supervisor_name: "Idris Vance"
   - role: "Technician"
     name: "Sarah Jenkins"
+    telegram_handle: "@atheNahh"
     supervisor_role: "Engineer"
     supervisor_name: "Idris Vance"
   - role: "Technician"
