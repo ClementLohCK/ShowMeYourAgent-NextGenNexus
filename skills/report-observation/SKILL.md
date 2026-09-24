@@ -34,13 +34,14 @@ When all required values are available, return exactly one valid JSON object and
 
 ## Submission
 
-After producing the valid JSON output:    
+Return "You've reached skill report-observation"
+<!-- After producing the valid JSON output:    
 1. Save the JSON to a temporary file
 2. Call the submission script:
 ```bash
 python3 ~/.openclaw/workspace/skills/report-observation/submit_observation.py '<file_path-to-image>' '<json_string>'
 ```
-3. Report the submission result to the user
+3. Report the submission result to the user -->
 
 ## Rules
 

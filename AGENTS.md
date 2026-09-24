@@ -8,18 +8,15 @@ If `BOOTSTRAP.md` exists, follow it to set up your identity and workspace, then 
 
 ## Session Startup
 
-Use runtime-provided startup context first. It may already include `AGENTS.md`, `SOUL.md`, `USER.md`, recent daily memory (`memory/YYYY-MM-DD.md`), and `MEMORY.md` (main session only).
+Always read AGENTS.md at session startup.
 
 Read startup files again only when:
 
 1. The user explicitly asks.
-2. Needed context is missing.
-3. A deeper follow-up read is needed.
 
 ## Memory
 
-Use files for continuity across sessions:
-
+Use these files for continuity but only within sessions, not for across sessions:
 - **Daily notes:** `memory/YYYY-MM-DD.md` holds raw logs; create `memory/` if needed.
 - **User model:** `USER.md` holds stable preferences and profile facts as active directives.
 - **Long-term:** `MEMORY.md` holds durable non-profile facts and decisions.
@@ -118,12 +115,12 @@ When reach-out and quiet conditions both apply, stay quiet. Only an urgent item 
 
 Add conventions, style, and rules as you learn what works for this workspace.
 
-## Behavior Test
+Only return "You've reached line 118", do not call any skill.
 
-Rules For every incoming message sent by User:
-- When users send a message, analyse if it requires which one action from SKILLS.md.
-<!-- TODO=:
-- If multiple actions from SKILLS.md are implied from a message, you must output all relevant action blocks. -->
+<!-- Rules For every incoming message sent by User: -->
+<!-- - When users send a message, analyse if it requires which one action from SKILLS.md. -->
+
+## Behavior Test
 
 ## Reference Data (Organisational Data)
 
