@@ -118,12 +118,15 @@ When reach-out and quiet conditions both apply, stay quiet. Only an urgent item 
 
 Add conventions, style, and rules as you learn what works for this workspace.
 
+### Workflow: Telegram Intent Routing
+1. When a user sends a message via Telegram, identify the single relevant skill/intent and do not execute it.
+2. Return exactly one JSON object to the user: {"telegram_handle":"...", "telegram_message":"...", "intent":"<skill>"}. Do not include any surrounding Markdown, explanation, words, or code fence.
+3. Send "JSON object sent" to the user
+4. Execute the skill.
+5. Report back to the user.
+
 ## Behavior Test
 
-Rules For every incoming message sent by User:
-- When users send a message, analyse if it requires which one action from SKILLS.md.
-<!-- TODO=:
-- If multiple actions from SKILLS.md are implied from a message, you must output all relevant action blocks. -->
 
 ## Reference Data (Organisational Data)
 
