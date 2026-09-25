@@ -18,9 +18,15 @@ When all required values are available, return exactly one valid JSON object and
   "endpoint": "POST /v1/maintenance/observations",
   "payload": {
     "context": {
-      "critical_condition": "<low|medium|critical>",
-      "location": "<site location>",
-      "equipment": "<equipment description or identifier>"
+      "classification": "<Safety|Environment|Social>",
+      "observation_type": "<Safe|Unsafe for Safety; Positive|Negative for Environment or Social>",
+      "observation_act_or_condition": "<Act|Condition>",
+      "location": {
+        "geocoord": false,
+        "country": "<India|Singapore|Vietnam|UAE|Kenya>",
+        "region": "<Central|East|West|North|North-East>",
+        "business_unit": "<Manufacturing & Logistics|Energy & Utilities>"
+      }
     },
     "stakeholders": {
       "reported_by": "<current user's name>",
@@ -39,14 +45,20 @@ When all required values are available, return exactly one valid JSON object and
 ## Rules
 
 ### 1. Output contract
-- Always use the exact `action` and `endpoint` values shown above.
+- Always set the exact `action` and `endpoint` values shown above.
 - Use only the fields in the schema; do not add, rename, or omit any required keys.
 - Return the JSON only after every required field is present and unambiguous.
 
 ### 2. Capture the observation
-- Put the reported severity or condition level in `payload.context.critical_condition`. Use only `low`, `medium`, or `critical`.
-- Put the reported site, zone, or sector in `payload.context.location`.
-- Put the reported equipment identifier or description in `payload.context.equipment`.
+- Use only `Safety`, `Environment`, or `Social` in `payload.context.classification`.
+- Use only `Safe` or `Unsafe` in `payload.context.observation_type` when `classification` is `Safety`.
+- Use only `Positive` or `Negative` in `payload.context.observation_type` when `classification` is `Environment` or `Social`.
+- Use only `Act` or `Condition` in `payload.context.observation_act_or_condition` for every classification.
+- Always set `payload.context.location.geocoord` to `false` because geolocation and location extrapolation are not implemented.
+- When `payload.context.location.geocoord` is `false`, the values `payload.context.location.country` and `payload.context.location.region` are required.
+- Use only `India`, `Singapore`, `Vietnam`, `UAE`, or `Kenya` in `payload.context.location.country`.
+- Use only `Central`, `East`, `West`, `North`, or `North-East` in `payload.context.location.region`.
+- Use only `Manufacturing & Logistics` or `Energy & Utilities` in `payload.context.location.business_unit`.
 - Put the concise, factual observation in `payload.observation_narrative`, preserving the user's wording where possible.
 
 ### 3. Resolve report details
