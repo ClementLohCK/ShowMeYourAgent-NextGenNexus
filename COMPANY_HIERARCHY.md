@@ -26,7 +26,7 @@ users:
     supervisor_role: "Engineer"
     supervisor_name: "Idris Vance"
   - role: "Technician"
-    name: "Davoid Choi"
+    name: "Davood Choi"
     supervisor_role: "Engineer"
     supervisor_name: "Elena Rostova"
   - role: "Technician"
