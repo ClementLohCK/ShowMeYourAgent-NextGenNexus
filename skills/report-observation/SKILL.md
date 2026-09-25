@@ -88,7 +88,7 @@ Use this skill whenever the user reports or observes equipment damage, failure, 
 - Clarify the JSON output if any single field is missing, ambiguous, inconsistent, or invented.
 
 ### 6. Submission
-After producing the valid JSON output, call the following submission script, leave the `<file_path-to-image>` empty if no image is provided, and pass the JSON string as the second argument:
+After producing the valid JSON output, call the following submission script. Add the image path as the second argument only when an image is provided:
 ```bash
-python3 ~/.openclaw/workspace/skills/report-observation/submit_observation_multipart.py '<file_path-to-image>' '<json_string>'
+python3 ~/.openclaw/workspace/skills/report-observation/submit_observation_multipart.py '<json_string>' ['<file_path-to-image>']
 ```
