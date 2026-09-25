@@ -56,7 +56,7 @@ Use this skill whenever the user reports or observes equipment damage, failure, 
 - Infer from context to put `India`, `Singapore`, `Vietnam`, `UAE`, or `Kenya` in `payload.context.location.country`.
 - Infer from context to put `Central`, `East`, `West`, `North`, or `North-East` in `payload.context.location.region`.
 - Infer from context to put `Manufacturing & Logistics` or `Energy & Utilities` in `payload.context.location.business_unit`.
-- Put the concise and factual final observation in `payload.observation_narrative`, preserving the user's wording where possible.
+- Put the concise and factual final observation in `payload.observation_narrative`, exclude data that can be found in Output Schema, preserve the user's wording where possible.
 
 ### 3. Resolve report details
 - Put the current user's name in `payload.stakeholders.reported_by`. Ask for the user's name if the current user has no unique match in `workspace/COMPANY_HIERARCHY.md`.
