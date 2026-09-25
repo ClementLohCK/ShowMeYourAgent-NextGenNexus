@@ -8,45 +8,39 @@ user-invocable: true
 
 Use this skill whenever the user reports or observes equipment damage, failure, a fault, or an unsafe condition, even if they do not explicitly ask to create a report.
 
-## Output
-
-When all required values are available, return exactly one valid JSON object and no surrounding Markdown, explanation, or code fence:
+## Output Schema
 
 ```json
 {
-  "action": "report_observation",
-  "endpoint": "POST /v1/maintenance/observations",
-  "payload": {
-    "context": {
-      "classification": "<Safety|Environment|Social>",
-      "observation_type": "<Safe|Unsafe for Safety; Positive|Negative for Environment or Social>",
-      "observation_act_or_condition": "<Act|Condition>",
-      "location": {
-        "geocoord": false,
-        "country": "<India|Singapore|Vietnam|UAE|Kenya>",
-        "region": "<Central|East|West|North|North-East>",
-        "business_unit": "<Manufacturing & Logistics|Energy & Utilities>"
-      }
-    },
-    "stakeholders": {
-      "reported_by": "<current user's name>",
-      "reported_date_time": "<report date and time in ISO 8601 format>"
-    },
-    "contact_details": {
-      "contractor": "PowerGen",
-      "supervisor_role": "<supervisor_role from workspace/COMPANY_HIERARCHY.md>",
-      "supervisor_name": "<supervisor_name from workspace/COMPANY_HIERARCHY.md>"
-    },
-    "observation_narrative": "<concise summary of the observation using the user's words where possible>"
-  }
+  "context": {
+    "classification": "<Safety|Environment|Social>",
+    "observation_type": "<Safe|Unsafe for Safety; Positive|Negative for Environment or Social>",
+    "observation_act_or_condition": "<Act|Condition>",
+    "location": {
+      "geocoord": false,
+      "country": "<India|Singapore|Vietnam|UAE|Kenya>",
+      "region": "<Central|East|West|North|North-East>",
+      "business_unit": "<Manufacturing & Logistics|Energy & Utilities>"
+    }
+  },
+  "stakeholders": {
+    "reported_by": "<current user's name>",
+    "reported_date_time": "<report date and time in ISO 8601 format>"
+  },
+  "contact_details": {
+    "contractor": "PowerGen",
+    "supervisor_role": "<supervisor_role from workspace/COMPANY_HIERARCHY.md>",
+    "supervisor_name": "<supervisor_name from workspace/COMPANY_HIERARCHY.md>"
+  },
+  "observation_narrative": "<concise summary of the observation using the user's words where possible>"
 }
 ```
 
 ## Rules
 
 ### 1. Pointers to follow
-- Use only the fields in the Output schema; do not add, rename, or omit any required keys.
-- Always put the exact `action` and `endpoint` values in the Output schema.
+- Use only the fields in the Output Schema; do not add, rename, or omit any required keys.
+- Always put the exact `action` and `endpoint` values in the Output Schema.
 - Always put `payload.context.location.geocoord` to `false` because geolocation and location extrapolation are not implemented.
 - If a required value is missing or ambiguous and cannot be inferred from the context, ask follow-up question(s) instead of inventing it.
 - Follow-up questions should be clear, direct and conversational.
@@ -94,4 +88,7 @@ When all required values are available, return exactly one valid JSON object and
 - Clarify the JSON output if any single field is missing, ambiguous, inconsistent, or invented.
 
 ### 6. Submission
-Return exactly the one valid JSON object according to schema in Output and no surrounding Markdown, explanation, or code fence.
+After producing the valid JSON output, call the following submission script. Add the image path as the second argument only when an image is provided:
+```bash
+python3 ~/.openclaw/workspace/skills/report-observation/submit_observation_multipart.py '<json_string>' ['<file_path-to-image>']
+```
