@@ -1,0 +1,7 @@
+.vscode/settings.json
+__pycache__/auth.cpython-38.pyc
+memory/*
+skills/report-observation/__pycache__/submit_observation.cpython-38.pyc
+DREAMS.md
+IDENTITY.md
+USER.md
