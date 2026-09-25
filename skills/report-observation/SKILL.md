@@ -44,22 +44,23 @@ When all required values are available, return exactly one valid JSON object and
 
 ## Rules
 
-### 1. Output contract
-- Always set the exact `action` and `endpoint` values shown above.
-- Use only the fields in the schema; do not add, rename, or omit any required keys.
-- Return the JSON only after every required field is present and unambiguous.
+### 1. Pointers to follow
+- Use only the fields in the Output schema; do not add, rename, or omit any required keys.
+- Always put the exact `action` and `endpoint` values in the Output schema.
+- Always put `payload.context.location.geocoord` to `false` because geolocation and location extrapolation are not implemented.
+- If a required value is missing or ambiguous and cannot be inferred from the context, ask follow-up question(s) instead of inventing it.
+- Avoid asking a single question per turn, but don't flood the user with more than 5 questions at once.
 
 ### 2. Capture the observation
-- Use only `Safety`, `Environment`, or `Social` in `payload.context.classification`.
-- Use only `Safe` or `Unsafe` in `payload.context.observation_type` when `classification` is `Safety`.
-- Use only `Positive` or `Negative` in `payload.context.observation_type` when `classification` is `Environment` or `Social`.
-- Use only `Act` or `Condition` in `payload.context.observation_act_or_condition` for every classification.
-- Always set `payload.context.location.geocoord` to `false` because geolocation and location extrapolation are not implemented.
+- Infer from context to put `Safety`, `Environment`, or `Social` in `payload.context.classification`.
+- Infer from context to put `Safe` or `Unsafe` in `payload.context.observation_type` when `classification` is `Safety`.
+- Infer from context to put `Positive` or `Negative` in `payload.context.observation_type` when `classification` is `Environment` or `Social`.
+- Infer from context to put `Act` or `Condition` in `payload.context.observation_act_or_condition` for every classification.
 - When `payload.context.location.geocoord` is `false`, the values `payload.context.location.country` and `payload.context.location.region` are required.
-- Use only `India`, `Singapore`, `Vietnam`, `UAE`, or `Kenya` in `payload.context.location.country`.
-- Use only `Central`, `East`, `West`, `North`, or `North-East` in `payload.context.location.region`.
-- Use only `Manufacturing & Logistics` or `Energy & Utilities` in `payload.context.location.business_unit`.
-- Put the concise, factual observation in `payload.observation_narrative`, preserving the user's wording where possible.
+- Infer from context to put `India`, `Singapore`, `Vietnam`, `UAE`, or `Kenya` in `payload.context.location.country`.
+- Infer from context to put `Central`, `East`, `West`, `North`, or `North-East` in `payload.context.location.region`.
+- Infer from context to put `Manufacturing & Logistics` or `Energy & Utilities` in `payload.context.location.business_unit`.
+- Put the concise and factual final observation in `payload.observation_narrative`, preserving the user's wording where possible.
 
 ### 3. Resolve report details
 - Put the current user's name in `payload.stakeholders.reported_by`. Ask for the user's name if the current user has no unique match in `workspace/COMPANY_HIERARCHY.md`.
@@ -67,21 +68,28 @@ When all required values are available, return exactly one valid JSON object and
 - Use the date and time of the message first sent by the user and include the `+08:00` offset in the value.
 
 ### 4. Resolve the supervisor
-- Always set `payload.contact_details.contractor` to `PowerGen`.
+- Always put `PowerGen` in `payload.contact_details.contractor`.
 - Consult `workspace/COMPANY_HIERARCHY.md` as the single source of truth.
-- If `workspace/COMPANY_HIERARCHY.md` does not exist, ask the user for the required supervisor contact details and set `payload.contact_details.supervisor_role` and `payload.contact_details.supervisor_name` from the user's answers.
+- If `workspace/COMPANY_HIERARCHY.md` does not exist, ask the user for the required supervisor contact details and put user's answers in `payload.contact_details.supervisor_role` and `payload.contact_details.supervisor_name`.
 <!-- TODO=: `notify_admin` about this missing info -->
 - Match the current user's name to exactly one `users` entry. If there is no unique match, ask for the user's name before performing the hierarchy lookup.
-- Set `payload.contact_details.supervisor_role` to the matched entry's `supervisor_role`.
-- Set `payload.contact_details.supervisor_name` to the matched entry's `supervisor_name`.
+- Put the matched entry's `supervisor_role` in `payload.contact_details.supervisor_role`.
+- Put the matched entry's `supervisor_name` in `payload.contact_details.supervisor_name`.
 
-
-### 5. Ask only when needed
-- If a required value is missing or ambiguous, ask follow-up question(s) instead of inventing it.
-- If more than one value is missing or ambiguous, ask exactly one concise follow-up question per turn, then wait for the user's answer before asking the next question.
-- If the user answers a question with information for multiple fields, record every unambiguous value and ask only for the next missing or ambiguous field.
-
-### 6. Validation
-- Before producing the JSON, check every required payload field for missing, unclear, or conflicting values.
+### 5. Validation
+- Validate the following fields in the JSON object before submission:
+  - `payload.context.classification`: must be exactly one of `Safety`, `Environment`, or `Social` and should match the observation narrative.
+  - `payload.context.observation_type`: must match the classification precisely:
+    - `Safety` -> `Safe` or `Unsafe`
+    - `Environment` or `Social` -> `Positive` or `Negative`
+  - `payload.context.observation_act_or_condition`: must be exactly `Act` or `Condition` and should match the observation narrative.
+  - `payload.context.location.geocoord`: must be exactly `false`.
+  - `payload.context.location.country`: must be exactly one of `India`, `Singapore`, `Vietnam`, `UAE`, or `Kenya`.
+  - `payload.context.location.region`: must be exactly one of `Central`, `East`, `West`, `North`, or `North-East`.
+  - `payload.context.location.business_unit`: must be exactly `Manufacturing & Logistics` or `Energy & Utilities`.
 - Never return placeholders or invented details.
 - Preserve the user's wording and keep the report factual, concise, and free of invented details.
+- Clarify the JSON output if any single field is missing, ambiguous, inconsistent, or invented.
+
+### 6. Submission
+Return exactly the one valid JSON object according to schema in Output and no surrounding Markdown, explanation, or code fence.
