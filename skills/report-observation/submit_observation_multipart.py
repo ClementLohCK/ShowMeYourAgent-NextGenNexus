@@ -37,23 +37,17 @@ def submit_observation(observation_data, file_path=''):
             )
         response.raise_for_status()                                                                                               
         print("response raised for status")
-        # return response.json()                                                                                                    
+        # return response.json()
     except requests.exceptions.HTTPError as e:                                                                                    
         if response.status_code == 429:
             retry_after = response.headers.get('Retry-After')
-            message = ("HTTP 429 Too Many Requests.")
-            if retry_after:
-                message += f" Retry-After: {retry_after}."
-            print(message, file=sys.stderr)
+            print(f"<<<<<<\nHTTPError 429 Too Many Requests, Retry-After: {retry_after}\n{response.text}\n>>>>>>", file=sys.stderr)
         else:
-            print(
-                f"HTTP Error {response.status_code}: {response.text}",
-                file=sys.stderr
-            )
+            print(f"<<<<<<\nHTTPError {response.status_code}: {response.text}\n>>>>>>", file=sys.stderr)
         sys.exit(1)                                                                                                               
-    # except requests.exceptions.RequestException as e:                                                                             
-    #     print(f"Request failed: {e}", file=sys.stderr)                                                                            
-    #     sys.exit(1)                                                                                                               
+    except requests.exceptions.RequestException as e:                                                                             
+        print(f"<<<<<<\nRequestException: {e}\n>>>>>>", file=sys.stderr)                                                                            
+        sys.exit(1)                                                                                                               
 
 if __name__ == "__main__":                                                                                                        
     try:
@@ -67,9 +61,9 @@ if __name__ == "__main__":
         # payload = {"key1":"value1"}
         result = submit_observation(payload, file_path)
         print(json.dumps(result,indent=2))                                                                                                                                               
-    # except json.JSONDecodeError as e:                                                                                                                     
-    #     print(f"Invalid JSON: {e}", file=sys.stderr)                                                                                                      
-    #     sys.exit(1)                                                                                                                                       
+    except json.JSONDecodeError as e:                                                                                                                     
+        print(f"<<<<<<\nInvalid JSON: {e}\n>>>>>>", file=sys.stderr)                                                                                                      
+        sys.exit(1)                                                                                                                                       
     except Exception as e:                                                                                                                                
-        print(f"Error: {e}", file=sys.stderr)                                                                                                             
+        print(f"<<<<<<\nError: {e}\n>>>>>>", file=sys.stderr)                                                                                                             
         sys.exit(1)
