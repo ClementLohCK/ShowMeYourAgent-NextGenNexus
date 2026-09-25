@@ -6,7 +6,7 @@ import json
 import os                                               
                                                     
 # Configuration - update these values                   
-API_BASE_URL = os.getenv('OBSERVATION_API_URL', 'https://webhook.site/aa3ed27a-94b3-4072-acaf-55f3703d29a6')                          
+API_BASE_URL = os.getenv('OBSERVATION_API_URL', 'https://webhook.site/81a9c287-9965-46a0-853e-dadf9287df02')
 API_KEY = os.getenv('OBSERVATION_API_KEY', '')  # Store in secrets or env                                         
                                                           
 def submit_observation(observation_data, file_path=''):
@@ -39,7 +39,17 @@ def submit_observation(observation_data, file_path=''):
         print("response raised for status")
         # return response.json()                                                                                                    
     except requests.exceptions.HTTPError as e:                                                                                    
-        print(f"HTTP Error {response.status_code}: {response.text}", file=sys.stderr)                                             
+        if response.status_code == 429:
+            retry_after = response.headers.get('Retry-After')
+            message = ("HTTP 429 Too Many Requests.")
+            if retry_after:
+                message += f" Retry-After: {retry_after}."
+            print(message, file=sys.stderr)
+        else:
+            print(
+                f"HTTP Error {response.status_code}: {response.text}",
+                file=sys.stderr
+            )
         sys.exit(1)                                                                                                               
     # except requests.exceptions.RequestException as e:                                                                             
     #     print(f"Request failed: {e}", file=sys.stderr)                                                                            
