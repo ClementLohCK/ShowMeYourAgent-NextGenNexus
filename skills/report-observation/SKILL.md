@@ -49,7 +49,9 @@ When all required values are available, return exactly one valid JSON object and
 - Always put the exact `action` and `endpoint` values in the Output schema.
 - Always put `payload.context.location.geocoord` to `false` because geolocation and location extrapolation are not implemented.
 - If a required value is missing or ambiguous and cannot be inferred from the context, ask follow-up question(s) instead of inventing it.
-- Avoid asking a single question per turn, but don't flood the user with more than 5 questions at once.
+- Follow-up questions should be clear, direct and conversational.
+- Format follow-up questions using plaintext, do not use any interactive widgets or rich UI.
+- Avoid asking a single question per turn, but also not more than 5 questions at once.
 
 ### 2. Capture the observation
 - Infer from context to put `Safety`, `Environment`, or `Social` in `payload.context.classification`.
