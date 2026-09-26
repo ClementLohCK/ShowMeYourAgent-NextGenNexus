@@ -18,6 +18,10 @@ Add one mapping for each user who can use the notification skill:
 ```yaml
 users:
   - role: "Technician"
+    name: "Clement Loh"
+    supervisor_role: "Engineer"
+    supervisor_name: "Idris Vance"
+  - role: "Technician"
     name: "Prudence Nyambura"
     supervisor_role: "Engineer"
     supervisor_name: "Idris Vance"

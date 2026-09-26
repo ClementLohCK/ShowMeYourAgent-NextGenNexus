@@ -7,7 +7,7 @@ import os
 from datetime import datetime, timedelta
                                                     
 # Configuration - update these values                   
-API_BASE_URL = os.getenv('OBSERVATION_API_URL', 'https://webhook.site/81a9c287-9965-46a0-853e-dadf9287df02')
+API_BASE_URL = os.getenv('OBSERVATION_API_URL', 'https://webhook.site/d9691851-0919-49ff-b3ba-1e13979cfb3c')
 API_KEY = os.getenv('OBSERVATION_API_KEY', '')  # Store in secrets or env                                         
                                                           
 def log(level, message):
